@@ -45,13 +45,21 @@ public class JpaMain {
 //
 //            System.out.println("========================");
 
-            Member member = new Member(201L, "member201");
+//            Member member = new Member(201L, "member201");
+//
+//            em.persist(member);
+//
+//            em.flush();
+//
+//            System.out.println("-------------------");
 
-            em.persist(member);
+            // 영속상태
+            Member member1 = em.find(Member.class, 1L);
+            member1.setName("ZZZZZZZ");
 
-            em.flush();
+            em.close();
 
-            System.out.println("-------------------");
+            Member member2 = em.find(Member.class, 1L);
             tx.commit();
         }catch(Exception e) {
             System.out.println("e" + e.getMessage());
