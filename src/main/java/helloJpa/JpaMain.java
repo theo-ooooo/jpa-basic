@@ -45,10 +45,13 @@ public class JpaMain {
 //
 //            System.out.println("========================");
 
-            Member member = em.find(Member.class, 150L);
+            Member member = new Member(201L, "member201");
 
-            em.remove(member);
+            em.persist(member);
 
+            em.flush();
+
+            System.out.println("-------------------");
             tx.commit();
         }catch(Exception e) {
             System.out.println("e" + e.getMessage());
