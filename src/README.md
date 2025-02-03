@@ -23,6 +23,7 @@
     em.getTransaction().begin();
     //객체를 저장한 상태(영속)
     em.persist(member);
+
 ```
 ```java
  tx.commit() // 이걸 해야 쿼리를 보냄.
