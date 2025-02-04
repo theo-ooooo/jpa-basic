@@ -53,13 +53,27 @@ public class JpaMain {
 //
 //            System.out.println("-------------------");
 
-            // 영속상태
-            Member member1 = em.find(Member.class, 1L);
-            member1.setName("ZZZZZZZ");
+//            // 영속상태
+//            Member member1 = em.find(Member.class, 1L);
+//            member1.setName("ZZZZZZZ");
+//
+//            em.close();
+//
+//            Member member2 = em.find(Member.class, 1L);
 
-            em.close();
+//            Member member = new Member();
+//            member.setId(1L);
+//            member.setUsername("kkw");
+//            member.setRoleType(RoleType.USER);
 
-            Member member2 = em.find(Member.class, 1L);
+            Member member2 = new Member();
+            member2.setId(2L);
+            member2.setUsername("kkw2");
+            member2.setRoleType(RoleType.ADMIN);
+
+//            em.persist(member);
+
+            em.persist(member2);
             tx.commit();
         }catch(Exception e) {
             System.out.println("e" + e.getMessage());
