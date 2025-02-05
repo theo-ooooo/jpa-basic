@@ -6,34 +6,43 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@TableGenerator(
-        name = "MEMBER_SEQ_GENERATOR",
-        table = "MY_SEQUENCES", pkColumnValue = "MEMBER_SEQ", allocationSize = 50)
-
 public class Member {
 
- @Id
- @GeneratedValue(strategy = GenerationType.TABLE, generator = "MEMBER_SEQ_GENERATOR")
-  private Long id;
+ @Id @GeneratedValue
+    private Long id;
 
- @Column(name = "name", nullable = false)
- private String username;
+ @Column(name = "USERNAME")
+    private String name;
 
-  public Long getId() {
-    return id;
-  }
+ @ManyToOne
+ @JoinColumn(name = "TEAM_ID")
+ private Team team;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+//    @Column(name = "TEAM_ID")
+//    private Long teamId;
 
-  public String getUsername() {
-    return username;
-  }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public Member() {}
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }

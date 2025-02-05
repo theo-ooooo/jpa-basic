@@ -19,20 +19,23 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
             Member member = new Member();
-//            member.setId("ID_A");
-            member.setUsername("C");
-
-            Member member1 = new Member();
-            member1.setUsername("D");
-
-            Member member2 = new Member();
-            member2.setUsername("E");
-
-            em.persist(member1);
+            member.setName("memberA");
+            member.setTeam(team);
             em.persist(member);
-            em.persist(member2);
-//
+
+            Team teamB = new Team();
+            teamB.setName("teamB");
+            em.persist(teamB);
+
+            member.setTeam(teamB);
+
+            System.out.println("member = " + member.getName());
+
             tx.commit();
         }catch(Exception e) {
             System.out.println("e" + e.getMessage());
