@@ -19,61 +19,20 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Member member = new Member();
+//            member.setId("ID_A");
+            member.setUsername("C");
 
-//            // 비영속
-//            Member member = new Member();
-//            member.setId(101L);
-//            member.setName("HelloJPA");
-//
-//            em.persist(member);// 1차 캐시.
-//
-//            em.find(Member.class, 101L); // 1차 캐시에서 들고옴
-//
-//            System.out.println("findMember.id" + member.getId());
-//            System.out.println("findMember.name" + member.getName());
-
-//            Member findMember1 = em.find(Member.class, 101L); // 디비조회후 1차 캐시에 저장
-//            Member findMember2 = em.find(Member.class, 101L); // 1차 캐시 조회.
-//
-//            System.out.println("findMember1 == findMember2 :" + (findMember1 == findMember2));
-
-//            Member member1 = new Member(15323L, "A");
-//            Member member2 = new Member(16232L, "B");
-//
-//            em.persist(member1);
-//            em.persist(member2);
-//
-//            System.out.println("========================");
-
-//            Member member = new Member(201L, "member201");
-//
-//            em.persist(member);
-//
-//            em.flush();
-//
-//            System.out.println("-------------------");
-
-//            // 영속상태
-//            Member member1 = em.find(Member.class, 1L);
-//            member1.setName("ZZZZZZZ");
-//
-//            em.close();
-//
-//            Member member2 = em.find(Member.class, 1L);
-
-//            Member member = new Member();
-//            member.setId(1L);
-//            member.setUsername("kkw");
-//            member.setRoleType(RoleType.USER);
+            Member member1 = new Member();
+            member1.setUsername("D");
 
             Member member2 = new Member();
-            member2.setId(2L);
-            member2.setUsername("kkw2");
-            member2.setRoleType(RoleType.ADMIN);
+            member2.setUsername("E");
 
-//            em.persist(member);
-
+            em.persist(member1);
+            em.persist(member);
             em.persist(member2);
+//
             tx.commit();
         }catch(Exception e) {
             System.out.println("e" + e.getMessage());
