@@ -20,11 +20,26 @@ public class JpaMain {
 
         try {
 
+            Movie movie = new Movie();
+
+            movie.setActor("A");
+            movie.setDirector("BBBB");
+            movie.setName("바람과 함께살아지다");
+            movie.setPrice(100000);
+
+            em.persist(movie);
+
+            em.flush();
+            em.clear();
+
+            Item findMovie = em.find(Item.class, movie.getId());
+
+            System.out.println("findMovie = " + findMovie.getName());
 
 
             tx.commit();
         }catch(Exception e) {
-            System.out.println("e" + e.getMessage());
+//            System.out.println("e" + e.getMessage());
             tx.rollback();
         } finally {
             em.close();
