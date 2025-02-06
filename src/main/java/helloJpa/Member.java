@@ -3,7 +3,9 @@ package helloJpa;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -18,8 +20,8 @@ public class Member {
  @JoinColumn(name = "TEAM_ID")
  private Team team;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
+@OneToMany(mappedBy = "member")
+private List<MemberProduct> memberProducts = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "LOCKER_ID")
