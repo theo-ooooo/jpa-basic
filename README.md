@@ -59,3 +59,8 @@
 - 단순히 FK만 필요하지 않고 추가적인 퀄럼들이 필요.
 - 연결 테이블용 엔티티를 추가한다.
 - @ManyToMany -> @OneToMany, @ManyToOne
+
+### 지연로딩, 즉시로딩
+- 실무에서 가급적 지연로딩만 사용.
+- @OneToMany @ManyToMany 는 기본이 지연로딩
+- @ManyToOne, @OneToOne은 기본이 즉시로딩

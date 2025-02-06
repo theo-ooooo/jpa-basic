@@ -22,14 +22,20 @@ public class JpaMain {
         try {
             
             Member member1 = new Member();
+            Team team1 = new Team();
+            team1.setName("team1");
+
+            em.persist(team1);
             
             member1.setName("hello1");
+            member1.setTeam(team1);
             
             em.persist(member1);
 
             Member member2 = new Member();
 
             member2.setName("hello2");
+            member2.setTeam(team1);
 
             em.persist(member2);
             
@@ -37,14 +43,9 @@ public class JpaMain {
             em.clear();
 
             Member m1 = em.find(Member.class, member1.getId());
-            System.out.println("m1.getClass() = " + m1.getClass());
+            Team team = m1.getTeam();
+            System.out.println("team.getName() = " + team.getName());
 
-            Member reference = em.getReference(Member.class, member1.getId());
-
-            System.out.println("reference.getClass() = " + reference.getClass());
-
-            System.out.println("ref" + emf.getPersistenceUnitUtil().isLoaded(reference));
-            System.out.println("a==b" + (m1 == reference));
 
             tx.commit();
         }catch(Exception e) {
