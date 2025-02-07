@@ -11,7 +11,7 @@ public class JpqlMember {
 
     private int age;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TEAM_ID")
     private JpqlTeam team;
 
@@ -35,8 +35,21 @@ public class JpqlMember {
         return age;
     }
 
+    public JpqlTeam getTeam() {
+        return team;
+    }
+
+    public void setTeam(JpqlTeam team) {
+        this.team = team;
+    }
+
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void changeTeam(JpqlTeam team) {
+        this.team = team;
+        team.getMembers().add(this);
     }
 
     @Override

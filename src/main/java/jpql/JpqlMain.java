@@ -15,20 +15,25 @@ public class JpqlMain {
         tx.begin();
 
         try {
-            for (int i = 0; i < 100; i++) {
-                JpqlMember jpqlMember = new JpqlMember();
-                jpqlMember.setUsername("member" + i);
-                jpqlMember.setAge(i);
-                em.persist(jpqlMember);
-            }
+            JpqlTeam jpqlTeam = new JpqlTeam();
+            jpqlTeam.setName("B");
+            em.persist(jpqlTeam);
+
+            JpqlMember jpqlMember = new JpqlMember();
+            jpqlMember.setUsername("team");
+            jpqlMember.setAge(10);
+            jpqlMember.changeTeam(jpqlTeam);
+            em.persist(jpqlMember);
 
 
-            List<JpqlMember> resultList = em.createQuery("select m from JpqlMember m order by m.age desc", JpqlMember.class).setFirstResult(0).setMaxResults(10).getResultList();
+            String query = "select m from JpqlMember m  join m.team t on t.name = 'A'";
+            List<JpqlMember> resultList = em.createQuery(query, JpqlMember.class).getResultList();
 
-            System.out.println("result.size " + resultList.size());
             for (JpqlMember member : resultList) {
                 System.out.println("member = " + member);
             }
+
+            tx.commit();
 
 
         }catch(Exception e) {
