@@ -21,14 +21,12 @@ public class JpqlMain {
             jpqlMember.setAge(10);
             em.persist(jpqlMember);
 
-            JpqlMember singleResult = em.createQuery("select m from JpqlMember m where m.username = :username", JpqlMember.class)
-                    .setParameter("username", "member1").getSingleResult();
+            List<MemberDTO> resultList = em.createQuery("select new jpql.MemberDTO(m.username, m.age) from JpqlMember m", MemberDTO.class).getResultList();
 
-            System.out.println("singleResult.getId() = " + singleResult.getId());
+            MemberDTO memberDTO = resultList.get(0);
+            System.out.println("memberDTO = " + memberDTO.getUsername());
+            System.out.println("memberDTO.getAge() = " + memberDTO.getAge());
 
-//            for (JpqlMember member : singleResult) {
-//                System.out.println("member = " + member);
-//            }
 
         }catch(Exception e) {
             tx.rollback();
