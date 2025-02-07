@@ -20,11 +20,18 @@ public class JpqlMain {
             em.persist(jpqlTeam);
 
             JpqlMember jpqlMember = new JpqlMember();
-            jpqlMember.setUsername("team");
+            jpqlMember.setUsername("관리자1");
             jpqlMember.setAge(10);
             jpqlMember.changeTeam(jpqlTeam);
             jpqlMember.setRole(RoleType.ADMIN);
             em.persist(jpqlMember);
+
+            JpqlMember jpqlMember2 = new JpqlMember();
+            jpqlMember2.setUsername("관리자2");
+            jpqlMember2.setAge(10);
+            jpqlMember2.changeTeam(jpqlTeam);
+            jpqlMember2.setRole(RoleType.ADMIN);
+            em.persist(jpqlMember2);
 
 
             em.flush();
@@ -44,8 +51,10 @@ public class JpqlMain {
 //
 //            String query = "select coalesce(m.username, '이름이 없는 회원') " +
 //                    "from JpqlMember m";
-            String query = "select nullif(m.username, '관리자') " +
-                    "from JpqlMember m";
+//            String query = "select nullif(m.username, '관리자') " +
+//                    "from JpqlMember m";
+
+            String query = "select function('group_concat', m.username) from JpqlMember m";
             String singleResult = em.createQuery(query, String.class).getSingleResult();
             System.out.println(singleResult);
             tx.commit();
