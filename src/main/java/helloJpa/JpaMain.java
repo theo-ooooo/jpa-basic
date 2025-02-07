@@ -1,5 +1,8 @@
 package helloJpa;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.h2.engine.User;
 
 import jakarta.persistence.EntityManager;
@@ -21,34 +24,35 @@ public class JpaMain {
         tx.begin();
 
         try {
-            
+
+            List<Member> resultList = em.createQuery("select m from Member m where m.name like '%kang%'", Member.class).getResultList();
+
+
+            System.out.println("Criteria");
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+            Root<Member> m = query.from(Member.class);
+
+            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("name"), "kang"));
+            List<Member> resultList1 = em.createQuery(cq).getResultList();
+            System.out.println("resultList1 = " + resultList1);
+
+
             Member member = new Member();
-            member.setName("A");
-            member.setHomeAddress(new Address("homeCity", "street", "zipcode1"));
-
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("피자");
-            member.getFavoriteFoods().add("햄버거");
-
-            member.getAddressHistory().add(new AddressEntity("old1", "street2", "zipcode2"));
-            member.getAddressHistory().add(new AddressEntity("old2", "street2", "zipcode2"));
-
+            member.setName("kang");
             em.persist(member);
 
-            em.flush();
-            em.clear();
+            System.out.println("네이티브 SQL 소개");
 
-            System.out.println("__________START");
-            Member findMember = em.find(Member.class, member.getId());
+            String sql = "SELECT * FROM MEMBER WHERE USERNAME = 'kang'";
 
-            Address oldAddress = findMember.getHomeAddress();
-            findMember.setHomeAddress(new Address("newCity", oldAddress.getStreet(), oldAddress.getZipcode()));
+            List<Member> resultList2 = em.createNativeQuery(sql, Member.class).getResultList();
 
-            findMember.getFavoriteFoods().remove("치킨");
-            findMember.getFavoriteFoods().add("한식");
+            for (Member member1 : resultList2) {
+                System.out.println("member1 = " + member1.getName());
+            }
 
-            findMember.getAddressHistory().remove(new AddressEntity("old2", "street2", "zipcode2"));
-            findMember.getAddressHistory().add(new AddressEntity("newCity1", "street2", "zipcode2"));
+
             tx.commit();
         }catch(Exception e) {
             e.printStackTrace();
