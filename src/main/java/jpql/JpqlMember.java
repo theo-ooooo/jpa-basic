@@ -15,6 +15,17 @@ public class JpqlMember {
     @JoinColumn(name = "TEAM_ID")
     private JpqlTeam team;
 
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
+
+    public RoleType getRole() {
+        return role;
+    }
+
+    public void setRole(RoleType role) {
+        this.role = role;
+    }
+
     public Long getId() {
         return id;
     }

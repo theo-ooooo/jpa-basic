@@ -23,14 +23,17 @@ public class JpqlMain {
             jpqlMember.setUsername("team");
             jpqlMember.setAge(10);
             jpqlMember.changeTeam(jpqlTeam);
+            jpqlMember.setRole(RoleType.ADMIN);
             em.persist(jpqlMember);
 
 
-            String query = "select m from JpqlMember m  join m.team t on t.name = 'A'";
-            List<JpqlMember> resultList = em.createQuery(query, JpqlMember.class).getResultList();
+            String query = "select m.username, 'HELLO', TRUE from JpqlMember m where m.role = :role";
+            List<Object[]> resultList = em.createQuery(query).setParameter("role", RoleType.ADMIN).getResultList();
 
-            for (JpqlMember member : resultList) {
-                System.out.println("member = " + member);
+            for (Object[] objects : resultList) {
+                System.out.println("member = " + objects[0]);
+                System.out.println("member = " + objects[1]);
+                System.out.println("member = " + objects[2]);
             }
 
             tx.commit();
