@@ -55,35 +55,14 @@ public class JpqlMain {
             jpqlMember4.setRole(RoleType.ADMIN);
             em.persist(jpqlMember4);
 
+            int resultCount = em.createQuery("update JpqlMember m set m.age = 20").executeUpdate();
+            System.out.println("resultCount = " + resultCount);
 
-            em.flush();
             em.clear();
 
-//            String query = "select " +
-//                    "case when m.age <= 10 then '학생요금' " +
-//                    "     when m.age >= 60 then '경로요금' " +
-//                    "     else '일반요금' " +
-//                    "end " +  // 🔥 'end' 필수 추가
-//                    "from JpqlMember m";
-//
-//            List<String> results = em.createQuery(query, String.class).getResultList();
-//            for (String result : results) {
-//                System.out.println("요금 유형: " + result);
-//            }
-//
-//            String query = "select coalesce(m.username, '이름이 없는 회원') " +
-//                    "from JpqlMember m";
-//            String query = "select nullif(m.username, '관리자') " +
-//                    "from JpqlMember m";
+            JpqlMember findMember = em.find(JpqlMember.class, jpqlMember.getId());
 
-//            String query = "select m from JpqlMember m join fetch m.team";
-            String query = "select m from JpqlMember m where m.team = :team";
-            List<JpqlMember> resultList = em.createQuery(query, JpqlMember.class).setParameter("team", teamA).getResultList();
-            System.out.println(resultList);
-
-            for (JpqlMember member : resultList) {
-                System.out.println(member);
-            }
+            System.out.println("member.age" + findMember.getAge());
             tx.commit();
 
 
