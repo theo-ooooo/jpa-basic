@@ -54,9 +54,14 @@ public class JpqlMain {
 //            String query = "select nullif(m.username, '관리자') " +
 //                    "from JpqlMember m";
 
-            String query = "select function('group_concat', m.username) from JpqlMember m";
-            String singleResult = em.createQuery(query, String.class).getSingleResult();
-            System.out.println(singleResult);
+            String query = "select t.members from JpqlTeam t";
+            List<JpqlMember> resultList = em.createQuery(query, JpqlMember.class).getResultList();
+            System.out.println(resultList);
+
+            for (JpqlMember member : resultList) {
+                JpqlTeam team = member.getTeam();
+//                System.out.println("team = " + team.getName());
+            }
             tx.commit();
 
 

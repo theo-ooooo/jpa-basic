@@ -44,7 +44,7 @@ public class JpaMain {
 
             System.out.println("네이티브 SQL 소개");
 
-            String sql = "SELECT * FROM MEMBER WHERE USERNAME = 'kang'";
+            String sql = "S";
 
             List<Member> resultList2 = em.createNativeQuery(sql, Member.class).getResultList();
 
