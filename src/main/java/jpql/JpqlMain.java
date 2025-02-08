@@ -77,16 +77,12 @@ public class JpqlMain {
 //                    "from JpqlMember m";
 
 //            String query = "select m from JpqlMember m join fetch m.team";
-            String query = "select t from JpqlTeam t";
-            List<JpqlTeam> resultList = em.createQuery(query, JpqlTeam.class).setFirstResult(0).setMaxResults(2).getResultList();
-            System.out.println(resultList.size());
+            String query = "select m from JpqlMember m where m.team = :team";
+            List<JpqlMember> resultList = em.createQuery(query, JpqlMember.class).setParameter("team", teamA).getResultList();
+            System.out.println(resultList);
 
-            for (JpqlTeam team : resultList) {
-                System.out.println("member = " + team.getName() + ", " + team.getMembers().size());
-                List<JpqlMember> members = team.getMembers();
-                for (JpqlMember member : members) {
-                    System.out.println("member = " + member);
-                }
+            for (JpqlMember member : resultList) {
+                System.out.println(member);
             }
             tx.commit();
 

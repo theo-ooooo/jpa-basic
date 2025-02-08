@@ -14,7 +14,7 @@ public class JpqlTeam {
     private String name;
 
     @BatchSize(size = 100)
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
     private List<JpqlMember> members = new ArrayList<>();
 
     public List<JpqlMember> getMembers() {
